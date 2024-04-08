@@ -1,26 +1,73 @@
-
-import { NextRequest, NextResponse } from 'next/server';
+import { hash } from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function POST(req: NextRequest) {
-    try {
-        const body = await req.json();
-        
-        
-        const newUser = await prisma.user.create({
-            data: {
-                firstname: body.firstname,
-                password: body.password,
-            },
-        });
+import { NextRequest, NextResponse } from 'next/server';
 
-        return NextResponse.json({ user: newUser });
-    } catch (error) {
-        console.error("Error saving user data:", error);
-        return NextResponse.error(new Error('Internal Server Error'));
-    } finally {
-        await prisma.$disconnect();
-    }
+export async function POST(req: NextRequest) {
+  const { email, password } = await req.json();
+  try {
+    const user = await prisma.user.findUnique({
+
+      where: {
+        email: email,
+      }
+
+    })
+    if (user) return NextResponse.json({ message: 'user already exits' })
+
+    const hashedpass = await hash(password, 10);
+    const newUser = await prisma.user.create({
+      data: {
+        firstname:'john',
+        lastname:'me',
+        email: email,
+        password: hashedpass,
+      },
+    });
+
+    return NextResponse.json(newUser);
+  } catch (error) {
+    console.error('Error registering user:', error);
+    return NextResponse.json({ message: 'Internal Server Error' });
+  }
+
 }
+
+
+
+
+
+
+
+
+// export async function post(req, res) {
+//   const { email, password } = req.body;
+
+//   try {
+//     const existingUser = await prisma.user.findUnique({
+//       where: {
+//         email: email,
+//       },
+//     });
+
+//     if (existingUser) {
+//       return res.status(400).json({ message: 'User already exists' });
+//     }
+
+//     const hashedPassword = await hash(password, 10);
+
+//     const newUser = await prisma.user.create({
+//       data: {
+//         email: email,
+//         password: hashedPassword,
+//       },
+//     });
+
+//     return res.status(201).json(newUser);
+//   } catch (error) {
+//     console.error('Error registering user:', error);
+//     return res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// }

@@ -52,28 +52,7 @@ export default function SignupFormDemo() {
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <form className="my-8" onSubmit={handleSubmit}>
-        <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
-          <LabelInputContainer>
-            <Label htmlFor="firstname">First name</Label>
-            <Input
-              id="firstname"
-              placeholder="Tyler"
-              type="text"
-              value={formData.firstname}
-              onChange={handleChange}
-            />
-          </LabelInputContainer>
-          <LabelInputContainer>
-            <Label htmlFor="lastname">Last name</Label>
-            <Input
-              id="lastname"
-              placeholder="Durden"
-              type="text"
-              value={formData.lastname}
-              onChange={handleChange}
-            />
-          </LabelInputContainer>
-        </div>
+       
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
           <Input
