@@ -1,4 +1,5 @@
 "use client";
+import { Appbar } from "@/components/ui/appbar";
 import SparklesCore from "@/components/ui/sparkles";
 import React from "react";
 
@@ -19,6 +20,8 @@ export default function  SparklesPreview() {
       <h1 className="md:text-7xl text-3xl lg:text-6xl font-bold text-center text-white relative z-20">
         Welcome to NextJS App.
       </h1>
+      <Appbar></Appbar>
     </div>
+
   );
 }

@@ -1,4 +1,4 @@
-import { hash } from 'bcrypt';
+import { hash } from 'bcrypt';//the user api to create new users in db
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -20,8 +20,8 @@ export async function POST(req: NextRequest) {
     const hashedpass = await hash(password, 10);
     const newUser = await prisma.user.create({
       data: {
-        firstname:'john',
-        lastname:'me',
+        firstname:'jh',
+        lastname:'aaa',
         email: email,
         password: hashedpass,
       },
